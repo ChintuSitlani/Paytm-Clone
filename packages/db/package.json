@@ -1,16 +1,20 @@
 {
     "name": "@repo/db",
     "version": "0.0.0",
-    "dependencies": {
-        "@prisma/client": "^5.11.0"
-    },
-    "devDependencies": {
-        "prisma": "5.11.0"
-    },
+    "private": true,
     "exports": {
         "./client": "./index.ts"
     },
+    "dependencies": {
+        "@prisma/client": "5.22.0"
+    },
+    "devDependencies": {
+        "prisma": "5.22.0"
+    },
     "scripts": {
-        "build": "prisma generate"
+        "build": "npx prisma generate",
+        "postinstall": "npx prisma generate",
+        "lint": "echo \"skip\"",
+        "check-types": "tsc --noEmit"
     }
 }

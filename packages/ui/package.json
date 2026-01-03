@@ -9,7 +9,9 @@
     "./appbar": "./src/Appbar.tsx"
   },
   "scripts": {
+    "build": "echo \"@repo/ui: no build step (tailwind handled by apps)\"",
     "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit",
     "generate:component": "turbo gen react-component"
   },
   "devDependencies": {

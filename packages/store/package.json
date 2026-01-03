@@ -7,5 +7,8 @@
   },
   "exports": {
     "./balance": "./src/hooks/useBalance"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
   }
 }
