@@ -8,18 +8,22 @@ interface AppbarProps {
     onSignin: any,
     onSignout: any
 }
-
 export const Appbar = ({
     user,
     onSignin,
     onSignout
-}: AppbarProps) => {
-    return <div className="flex justify-between border-b px-4 border-slate-300">
-        <div className="text-lg flex flex-col justify-center">
-            PayTM
-        </div>
-        <div className="flex flex-col justify-center pt-2">
-            <Button onClick={user ? onSignout : onSignin}>{user ? "Logout" : "Login"}</Button>
-        </div>
-    </div>
-}
+  }: AppbarProps) => {
+    return (
+      <div className="flex justify-between items-center px-6 h-16 bg-[#ebe6e6] border-b border-border">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/4/42/Paytm_logo.png?20170729032638"
+          alt="Paytm Logo"
+          className="w-28 h-8 object-contain"
+        />
+        <Button onClick={user ? onSignout : onSignin}>
+          {user ? "Logout" : "Login"}
+        </Button>
+      </div>
+    );
+  };
+  
