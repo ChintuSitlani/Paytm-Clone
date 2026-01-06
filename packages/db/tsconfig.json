@@ -3,16 +3,16 @@
   "compilerOptions": {
     "outDir": "dist"
   },
-    "files": [
-      "./index.ts",
-      "./prisma/seed.ts"
-    ],
-    "include": [
-      "index.ts",
-      "prisma/**/*.ts"
-    ],
-    "exclude": [
-      "dist"
-    ]
-
+  "files": [
+    "./index.ts",
+    "./prisma/seed.ts"
+  ],
+  "include": [
+    "index.ts",
+    "prisma/**/*.ts"
+  ],
+  "exclude": [
+    "dist"
+  ]
+  
 }
