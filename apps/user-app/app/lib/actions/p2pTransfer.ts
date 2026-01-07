@@ -26,8 +26,8 @@ export async function p2pTransfer(to: string, amount: number) {
 
         if (fromUserId === toUser.id) {
             throw new Error("Cannot transfer to self");
-          }
-          
+        }
+
         await prisma.$transaction(async (tx) => {
 
             await tx.$queryRaw`SELECT 1 From "Balance"  WHERE "userId" =  ${fromUserId} FOR UPDATE`;//for locking the balance table row 
@@ -62,11 +62,23 @@ export async function p2pTransfer(to: string, amount: number) {
                     }
                 }
             });
+
+            //create p2p transfer entry
+            await tx.p2pTransfer.create({
+                data: {
+                    amount,
+                    fromUserId,
+                    toUserId: toUser.id,
+                    timestamp: new Date()
+                }
+            });
+            console.log("p2p transaction created sucessfully")
         })
 
-        return {message:"Transaction Succesfull."}
+        return { message: "Transaction Succesfull." };
+
     } catch (err) {
-        console.error("Something went wrong "+err);
+        console.error("Something went wrong " + err);
         return ({
             message: "Something went wrong",
         });
