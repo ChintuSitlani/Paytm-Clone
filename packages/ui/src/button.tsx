@@ -4,17 +4,29 @@ import { ReactNode } from "react";
 
 interface ButtonProps {
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void | Promise<void>;
+  disabled?: boolean;
+  type?: "button" | "submit" | "reset";
+  className?: string;
 }
 
-export const Button = ({ onClick, children }: ButtonProps) => {
+export const Button = ({
+  onClick,
+  children,
+  disabled = false,
+  type = "button",
+  className = "",
+}: ButtonProps) => {
   return (
     <button
+      type={type}
       onClick={onClick}
-      type="button"
-      className="
-         bg-accent
+      disabled={disabled}
+      className={`
+        bg-accent
         hover:bg-[#009FD1]
+        disabled:bg-accent/60
+        disabled:cursor-not-allowed
         text-white
         font-semibold
         rounded-lg
@@ -22,12 +34,11 @@ export const Button = ({ onClick, children }: ButtonProps) => {
         py-2.5
         focus:ring-4
         focus:ring-accent/30
-        transition
-        px-5 py-2.5 me-2 mb-2
         border
         border-border
         transition-colors
-      "
+        ${className}
+      `}
     >
       {children}
     </button>
