@@ -1,5 +1,5 @@
 {
-  "name": "week-18",
+  "name": "paytm-clone",
   "private": true,
   "scripts": {
     "build": "turbo build",
@@ -9,18 +9,16 @@
     "clean": "rd /s /q .turbo node_modules"
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^20.11.24",
     "eslint-plugin-turbo": "^2.7.2",
     "prettier": "^3.2.5",
-    "turbo": "^2.7.2"
+    "turbo": "^2.7.2",
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "npm@10.9.2",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "packageManager": "pnpm@9.0.0"
 }

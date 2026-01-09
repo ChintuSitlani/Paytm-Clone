@@ -13,7 +13,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@repo/db":"*",
+    "@repo/db": "workspace:*",
     "@types/express": "^5.0.6",
     "esbuild": "^0.27.2",
     "express": "^5.2.1"

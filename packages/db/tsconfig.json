@@ -1,18 +1,9 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "outDir": "dist"
+    "outDir": "dist",
+    "types": ["node"]
   },
-  "files": [
-    "./index.ts",
-    "./prisma/seed.ts"
-  ],
-  "include": [
-    "index.ts",
-    "prisma/**/*.ts"
-  ],
-  "exclude": [
-    "dist"
-  ]
-  
+  "include": ["index.ts", "prisma/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }

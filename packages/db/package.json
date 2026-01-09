@@ -2,11 +2,16 @@
     "name": "@repo/db",
     "version": "0.0.0",
     "private": true,
+    "main": "./index.ts",
+    "types": "./index.ts",
     "exports": {
+        ".": "./index.ts",
         "./client": "./index.ts"
     },
     "dependencies": {
-        "@prisma/client": "5.22.0"
+        "@prisma/client": "5.22.0",
+        "@types/bcrypt": "^5.0.2",
+        "bcrypt": "^5.1.1"
     },
     "devDependencies": {
         "prisma": "5.22.0"
@@ -15,8 +20,8 @@
         "seed": "ts-node prisma/seed.ts"
     },
     "scripts": {
-        "build": "npx prisma generate",
-        "postinstall": "npx prisma generate",
+        "build": "prisma generate",
+        "postinstall": "prisma generate",
         "lint": "echo \"skip\"",
         "check-types": "tsc --noEmit"
     }
