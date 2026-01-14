@@ -1,6 +1,6 @@
 import GoogleProvider from "next-auth/providers/google";
 import type { NextAuthOptions } from "next-auth";
-import db from "@repo/db/client";
+import db from "@repo/db";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -16,10 +16,8 @@ export const authOptions: NextAuthOptions = {
         return false;
       }
 
-      await db.merchant.upsert({
-        where: {
-          email: user.email,
-        },
+      const merchant = await db.merchant.upsert({
+        where: { email: user.email },
         create: {
           email: user.email,
           name: user.name ?? "",
@@ -31,18 +29,32 @@ export const authOptions: NextAuthOptions = {
         },
       });
 
+      // IMPORTANT: attach DB id to user
+      (user as any).id = merchant.id;
+
       return true;
+    },
+
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = (user as any).id;
+      }
+      return token;
+    },
+
+    async session({ session, token }) {
+
+      return session;
     },
   },
 
   secret: requiredEnv("NEXTAUTH_SECRET"),
 };
 
-  function requiredEnv(name: string): string {
-    const value = process.env[name];
-    if (!value) {
-      throw new Error(`Missing environment variable: ${name}`);
-    }
-    return value;
-  }
-  
+function requiredEnv(name: string): any {
+  const value = process.env[name];
+  // if (!value) {
+  //   throw new Error(`Missing environment variable: ${name}`);
+  // }
+  return value;
+}

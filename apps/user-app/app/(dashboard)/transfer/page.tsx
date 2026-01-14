@@ -1,4 +1,4 @@
-import prisma from "@repo/db/client";
+import prisma from "@repo/db";
 import { AddMoney } from "../../../components/AddMoneyCard";
 import { BalanceCard } from "../../../components/BalanceCard";
 import { OnRampTransactions } from "../../../components/OnRampTransactions";
@@ -7,25 +7,38 @@ import { authOptions } from "../../lib/auth";
 
 async function getBalance() {
     const session = await getServerSession(authOptions);
+
+    if (!session?.user?.id) {
+        return {
+            amount: 0,
+            locked: 0,
+        };
+    }
+
     const balance = await prisma.balance.findFirst({
         where: {
-            userId: Number(session?.user?.id)
-        }
+            userId: Number(session.user.id),
+        },
     });
+
     return {
-        amount: balance?.amount || 0,
-        locked: balance?.locked || 0
-    }
+        amount: balance?.amount ?? 0,
+        locked: balance?.locked ?? 0,
+    };
 }
+
 
 async function getOnRampTransactions() {
     const session = await getServerSession(authOptions);
+    if (!session?.user?.id) {
+        return [];
+    }
     const txns = await prisma.onRampTransaction.findMany({
         where: {
             userId: Number(session?.user?.id)
         },
-        orderBy:{
-            startTime:'desc'
+        orderBy: {
+            startTime: 'desc'
         }
     });
     return txns.map(t => ({
@@ -36,7 +49,7 @@ async function getOnRampTransactions() {
     }))
 }
 
-export default async function() {
+export default async function () {
     const balance = await getBalance();
     const transactions = await getOnRampTransactions();
 

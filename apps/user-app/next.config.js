@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
-module.exports = {
-  transpilePackages: ["@repo/ui"],
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+const nextConfig = {
+  transpilePackages: ["@repo/db", "@repo/ui"]
 };
+
+module.exports = nextConfig;
