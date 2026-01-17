@@ -19,6 +19,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "scripts": {
+    "generate": "prisma generate",
     "build": "prisma generate",
     "postinstall": "prisma generate",
     "check-types": "tsc --noEmit"

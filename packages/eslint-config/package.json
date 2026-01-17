@@ -2,12 +2,21 @@
   "name": "@repo/eslint-config",
   "version": "0.0.0",
   "private": true,
+  "type": "commonjs",
   "main": "./index.js",
   "exports": {
-    ".": "./index.js",
-    "./library": "./library.js",
-    "./next": "./next.js",
-    "./react-internal": "./react-internal.js"
+    ".": {
+      "require": "./index.js"
+    },
+    "./next": {
+      "require": "./next.js"
+    },
+    "./library": {
+      "require": "./library.js"
+    },
+    "./react-internal": {
+      "require": "./react-internal.js"
+    }
   },
   "files": [
     "index.js",

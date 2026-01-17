@@ -1,0 +1,25 @@
+services:
+  user-app:
+    build:
+      context: .
+      target: user-app
+    ports:
+      - "3001:3001"
+    env_file:
+      - apps/user-app/.env.local
+
+  merchant-app:
+    build:
+      context: .
+      target: merchant-app
+    ports:
+      - "3000:3000"
+    env_file:
+      - apps/merchant-app/.env.local
+
+  bank-webhook:
+    build:
+      context: .
+      target: bank-webhook
+    ports:
+      - "3003:3003"
