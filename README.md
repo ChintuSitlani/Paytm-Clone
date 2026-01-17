@@ -1,81 +1,121 @@
-# Turborepo starter
+# Root README.md
 
-This is an official starter Turborepo.
+# Paytm Clone – Turborepo Monorepo
 
-## Using this example
+This repository contains a **Paytm-like payments platform** built using a **Turborepo monorepo** architecture. It includes multiple Next.js applications, shared packages, and backend services, all orchestrated using **pnpm**, **Turbo**, and **Docker**.
 
-Run the following command:
+The project is designed to be **production-ready**, with optimized Docker builds, Prisma integration, and standard Next.js build Next.js deployments.
 
-```sh
-npx create-turbo@latest
-```
+---
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## 🏗️ Monorepo Structure
 
 ```
-cd my-turborepo
-pnpm build
+.
+├── apps/
+│   ├── user-app/          # User-facing Next.js application
+│   ├── merchant-app/      # Merchant dashboard Next.js application
+│   └── bank-webhook/      # Backend webhook service (Node.js)
+│
+├── packages/
+│   ├── db/                # Prisma + database access layer
+│   ├── ui/                # Shared UI components
+│   ├── eslint-config/     # Shared ESLint configuration
+│   └── typescript-config/ # Shared tsconfig base
+│
+├── docker-compose.yml
+├── Dockerfile
+├── pnpm-workspace.yaml
+└── turbo.json
 ```
 
-### Develop
+---
 
-To develop all apps and packages, run the following command:
+## 🚀 Tech Stack
 
-```
-cd my-turborepo
+* **Monorepo:** Turborepo
+* **Frontend:** Next.js 14 (App Router, Standalone output)
+* **Backend:** Node.js (Webhook service)
+* **Database:** PostgreSQL + Prisma
+* **Package Manager:** pnpm
+* **Containerization:** Docker & Docker Compose
+* **Language:** TypeScript
+
+---
+
+## 🧠 Applications
+
+| App            | Description                         | Port   |
+| -------------- | ----------------------------------- | ------ |
+| `user-app`     | User-facing Paytm-style application | `3001` |
+| `merchant-app` | Merchant dashboard                  | `3000` |
+| `bank-webhook` | Backend webhook listener            | `3003` |
+
+---
+
+## 🧑‍💻 Local Development (Without Docker)
+
+```bash
+pnpm install
 pnpm dev
 ```
 
-### Remote Caching
+---
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## 🐳 Running with Docker (Recommended)
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
+```bash
+docker compose build --no-cache
+docker compose up
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+* User App → [http://localhost:3001](http://localhost:3001)
+* Merchant App → [http://localhost:3000](http://localhost:3000)
+* Bank Webhook → [http://localhost:3003](http://localhost:3003)
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+---
 
-```
-npx turbo link
-```
+## 🔐 Environment Variables Setup (`.env.local`)
 
-## Useful Links
+Each application and service **maintains its own environment file**.  
+Environment files are **not committed to version control** and must be created manually.
 
-Learn more about the power of Turborepo:
+### 📍 Where to add `.env.local`
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+| Location | Purpose |
+|--------|--------|
+| `apps/user-app/.env.local` | User App environment variables |
+| `apps/merchant-app/.env.local` | Merchant App environment variables |
+| `apps/bank-webhook/.env` | Webhook service environment variables |
+| `packages/db/.env` | Prisma database connection |
+
+---
+
+### 🧪 Example `.env.local` (Next.js Apps)
+
+```env
+DATABASE_URL=postgresql://user:password@host:5432/dbname
+NEXTAUTH_SECRET=your-secret
+NEXTAUTH_URL=http://localhost:3001
+
+| `packages/db/.env` | Prisma database connection |
+DATABASE_URL=postgresql://user:password@host:5432/dbname
+
+| `apps/merchant-app/.env.local` | Merchant App environment variables |
+
+DATABASE_URL=postgresql://user:password@host:5432/dbname
+NEXTAUTH_SECRET=your-secret
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your_google_client_id_here
+GOOGLE_CLIENT_SECRET=your_google_client_secret_here
+
+---
+
+## ⚡ Performance Optimizations
+
+* Next.js **standard Next.js build output** for minimal Docker images
+* Shared dependency installation in a single build stage
+* Optimized Docker layer copying
+* Production-only runtime images
+
+---
